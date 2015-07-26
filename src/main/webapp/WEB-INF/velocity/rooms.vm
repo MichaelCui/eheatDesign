@@ -10,7 +10,7 @@
 					<img src="" id="bedRoomImg${i}"/>
 					<input name="roomRadio$i" type="radio" value="bedRoom_rectangle${i}" onclick="hidenAndShow(bedRoom_rectangle${i},bedRoom_p${i},'bedRoomImg${i}',1)" />矩形 
 					<input name="roomRadio$i" type="radio" value="bedRoom_trapezoid${i}" onclick="hidenAndShow(bedRoom_trapezoid${i},bedRoom_p${i},'bedRoomImg${i}',2)"/>梯形
-					<input name="roomRadio$i" type="radio" value="bedRoom_circle${i}" onclick="hidenAndShow(bedRoom_circle${i},bedRoom_p${i},'bedRoomImg${i}',3)"/>扇形 
+					<input name="roomRadio$i" type="radio" value="bedRoom_circle${i}" onclick="hidenAndShow(bedRoom_circle${i},bedRoom_p${i},'bedRoomImg${i}',3)"/>拱形 
 					<input name="roomRadio$i" type="radio" value="bedRoom_triangle${i}" onclick="hidenAndShow(bedRoom_triangle${i},bedRoom_p${i},'bedRoomImg${i},0')"/>三角形 
 					<input name="roomRadio$i" type="radio" value="bedRoom_Lpolygon${i}" onclick="hidenAndShow(bedRoom_Lpolygon${i},bedRoom_p${i},'bedRoomImg${i}',4)"/>L型 
 				</p>
@@ -67,7 +67,7 @@
 					<img src="" id="livingRoomImg${i}"/>
 					<input name="livingRoomRadio$i" type="radio" value="livingRoom_rectangle${i}" onclick="hidenAndShow(livingRoom_rectangle${i},livingRoom_p${i},'livingRoomImg${i}',1)" />矩形 
 					<input name="livingRoomRadio$i" type="radio" value="livingRoom_trapezoid${i}" onclick="hidenAndShow(livingRoom_trapezoid${i},livingRoom_p${i},'livingRoomImg${i}',2)"/>梯形
-					<input name="livingRoomRadio$i" type="radio" value="livingRoom_circle${i}" onclick="hidenAndShow(livingRoom_circle${i},livingRoom_p${i},'livingRoomImg${i}',3)"/>扇形 
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_circle${i}" onclick="hidenAndShow(livingRoom_circle${i},livingRoom_p${i},'livingRoomImg${i}',3)"/>拱形 
 					<input name="livingRoomRadio$i" type="radio" value="livingRoom_triangle${i}" onclick="hidenAndShow(livingRoom_triangle${i},livingRoom_p${i},'livingRoomImg${i}',0)"/>三角形 
 					<input name="livingRoomRadio$i" type="radio" value="livingRoom_Lpolygon${i}" onclick="hidenAndShow(livingRoom_Lpolygon${i},livingRoom_p${i},'livingRoomImg${i}',4)"/>L型 
 				</p>
@@ -124,7 +124,7 @@
 					<img src="" id="kitchenRoomImg${i}"/>
 					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_rectangle${i}" onclick="hidenAndShow(kitchen_rectangle${i},kitchen_p${i},'kitchenRoomImg${i}',1)" />矩形 
 					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_trapezoid${i}" onclick="hidenAndShow(kitchen_trapezoid${i},kitchen_p${i},'kitchenRoomImg${i}',2)"/>梯形
-					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_circle${i}" onclick="hidenAndShow(kitchen_circle${i},kitchen_p${i},'kitchenRoomImg${i}',3)"/>扇形 
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_circle${i}" onclick="hidenAndShow(kitchen_circle${i},kitchen_p${i},'kitchenRoomImg${i}',3)"/>拱形 
 					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_triangle${i}" onclick="hidenAndShow(kitchen_triangle${i},kitchen_p${i},'kitchenRoomImg${i}',0)"/>三角形 
 					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_Lpolygon${i}" onclick="hidenAndShow(kitchen_Lpolygon${i},kitchen_p${i},'kitchenRoomImg${i}',4)"/>L型 
 				</p>
@@ -181,7 +181,7 @@
 					<img src="" id="bathRoomImg${i}"/>
 					<input name="bathRoomRadio$i" type="radio" value="bathRoom_rectangle${i}" onclick="hidenAndShow(bathRoom_rectangle${i},bathRoom_p${i},'bathRoomImg${i}',1)" />矩形 
 					<input name="bathRoomRadio$i" type="radio" value="bathRoom_trapezoid${i}" onclick="hidenAndShow(bathRoom_trapezoid${i},bathRoom_p${i},'bathRoomImg${i}',2)"/>梯形
-					<input name="bathRoomRadio$i" type="radio" value="bathRoom_circle${i}" onclick="hidenAndShow(bathRoom_circle${i},bathRoom_p${i},'bathRoomImg${i}',3)"/>扇形 
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_circle${i}" onclick="hidenAndShow(bathRoom_circle${i},bathRoom_p${i},'bathRoomImg${i}',3)"/>拱形 
 					<input name="bathRoomRadio$i" type="radio" value="bathRoom_triangle${i}" onclick="hidenAndShow(bathRoom_triangle${i},bathRoom_p${i},'bathRoomImg${i}',0)"/>三角形 
 					<input name="bathRoomRadio$i" type="radio" value="bathRoom_Lpolygon${i}" onclick="hidenAndShow(bathRoom_Lpolygon${i},bathRoom_p${i},'bathRoomImg${i}',4)"/>L型 
 				</p>
@@ -238,7 +238,7 @@
 					<img src="" id="balconyRoomImg${i}"/>
 					<input name="balconyRoomRadio$i" type="radio" value="balcony_rectangle${i}" onclick="hidenAndShow(balcony_rectangle${i},balcony_p${i},'balconyRoomImg${i}',1)" />矩形 
 					<input name="balconyRoomRadio$i" type="radio" value="balcony_trapezoid${i}" onclick="hidenAndShow(balcony_trapezoid${i},balcony_p${i},'balconyRoomImg${i}',2)"/>梯形
-					<input name="balconyRoomRadio$i" type="radio" value="balcony_circle${i}" onclick="hidenAndShow(balcony_circle${i},balcony_p${i},'balconyRoomImg${i}',3)"/>扇形 
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_circle${i}" onclick="hidenAndShow(balcony_circle${i},balcony_p${i},'balconyRoomImg${i}',3)"/>拱形 
 					<input name="balconyRoomRadio$i" type="radio" value="balcony_triangle${i}" onclick="hidenAndShow(balcony_triangle${i},balcony_p${i},'balconyRoomImg${i}',0)"/>三角形 
 					<input name="balconyRoomRadio$i" type="radio" value="balcony_Lpolygon${i}" onclick="hidenAndShow(balcony_Lpolygon${i},balcony_p${i},'balconyRoomImg${i}',4)"/>L型 
 				</p>

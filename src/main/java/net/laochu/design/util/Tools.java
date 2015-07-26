@@ -189,7 +189,10 @@ public class Tools {
 	public static String formatStr(String d){
 		DecimalFormat df = new DecimalFormat("#.00");   
 		return df.format(Double.parseDouble(d));
-		
+	}
+	
+	public static long timeMillis(){
+		return System.currentTimeMillis();
 	}
 	
 	   public static   double getDirRad(double angX,double angY) {

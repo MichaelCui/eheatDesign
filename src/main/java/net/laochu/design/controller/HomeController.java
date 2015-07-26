@@ -65,7 +65,7 @@ public class HomeController {
 		model.put("kitchenNum", kitchenNum);
 		model.put("bathRoomNum", bathRoomNum);
 		model.put("balconyNum", balconyNum);
-		return new ModelAndView("bedRoom");
+		return new ModelAndView("rooms");
 	}
 	
 	@RequestMapping(value = "/addRoom.htm", method = RequestMethod.POST,produces="application/json")

@@ -287,7 +287,7 @@ function removeRoom(_this,roomID){
  function getLidiv(){
  		$("#submitRooms").show();
  		$("#getDivbutton").attr('disabled',true);
-   		var dataStr="bedRoom.htm?bedRoomNum="+$("#bedRoom").val()+"&livingRoomNum="+$("#livingRoom").val()+"&kitchenNum="+$("#kitchen").val()+"&bathRoomNum="+$("#bathRoom").val()+"&balconyNum="+$("#balcony").val();
+   		var dataStr="bedRoom.htm?bedRoomNum="+$("#bedRoom").val()+"&livingRoomNum="+$("#livingRoom").val()+"&kitchenNum="+$("#kitchen").val()+"&bathRoomNum="+$("#bathRoom").val()+"&balconyNum="+$("#balcony").val()+"&v=${Tools.timeMillis()}";
 		$.get(dataStr,function(data){ 
 			$("#houseDiv").html(data); 
 			if (!$.support.leadingWhitespace) {
