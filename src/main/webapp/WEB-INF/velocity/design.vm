@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" http-equiv="Content-Type" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<title>电地暖施工辅助设计</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/plug-in.js"></script>
+	<script src="js/assemble.js"></script>
+	<!--[if IE]>
+		<script src="js/html5.js"></script>
+		<script src="js/excanvas.js"></script>
+	<![endif]-->
+	<style type="text/css">
+
+		body {
+			font-family:Microsoft YaHei,SimSun,SimHei,Arial,Times New Roman;
+			text-align: center;
+			background: #f1f1f1;
+		}
+		
+		ol{
+		        list-style:none;
+		        width: 580px;
+		        padding-left: 0px;
+		}
+		ol div p span{
+				display: none;
+		}
+		.title{
+			line-height:50px; 
+			border-radius: 5px;
+			border:.1rem solid #b5b5b5;
+			height:50px;
+			width: 800px;
+			margin-right: auto;
+			background: linear-gradient(#fff,#ebebeb);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ebebeb',GradientType=0 )
+		}
+		button{
+			height:30px;
+			line-height:20px;
+			vertical-align: middle;
+		}
+		.confirmButton{
+			    position: absolute;
+			    margin-top: 120px;
+    			left: 50%;
+   				margin-left: 165px;
+		
+		}
+		.mark{
+			    width: 40px;
+    			height: 30px;
+    			left: 50%;
+    			margin: 10px 0px 0px 300px;
+    			position: absolute;
+    			display:none;
+		}
+		.delul{
+				width: 40px;
+    			height: 30px;
+    			left: 50%;
+    			margin: 10px 0px 0px 340px;
+    			position: absolute;
+		
+		}
+		.del{
+				width: 40px;
+    			height: 30px;
+    			left: 50%;
+    			margin: 0px 0px 0px -40px;
+    			position: absolute;
+		
+		}
+		.bgdiv{
+			width: 800px;
+			height:1000px;
+			margin-right: auto;
+			margin-left: auto;
+			background:#f1f1f1;
+		}
+		h2{
+			margin-bottom: 0px;
+			margin-top: 0px;
+			display: inline;
+		}
+		ul{
+			display: inline;
+		}
+		.divhide{
+			display: none;
+		}
+		img{
+			width:135px;
+			height:135px;
+			margin: -5px 20px -60px 0px;
+		}
+		.canvas{
+			width:300;
+			height:150;
+		}
+	</style>
+</head>
+<body>
+<div class="bgdiv">
+<h2>发热电缆设计软件</h2>
+<div class="title">请选择您的户型
+<select id="bedRoom">
+	<option value="0">0</option>
+	<option selected value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+</select> 室
+<select id="livingRoom">
+	<option value="0">0</option>
+	<option selected value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+</select> 厅
+<select id="kitchen">
+	<option value="0">0</option>
+	<option selected value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+</select> 厨
+<select id="bathRoom">
+	<option value="0">0</option>
+	<option selected value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+</select> 卫
+<select id="balcony">
+	<option value="0">0</option>
+	<option selected value="1">1</option>
+	<option value="2">2</option>
+	<option value="3">3</option>
+	<option value="4">4</option>
+</select> 阳台
+<button id="getDivbutton" onclick="javascript:getLidiv();">确认户型大小</button>
+</div>
+<div id="houseDiv">
+
+</div>
+<button id="submitRooms"  style="display: none;" onclick="javascript:subRooms();">下一步</button>
+<input type="hidden" value="$!{house_id}" id="house_id"/>
+</div>
+</body>
+<script type="text/javascript">
+function subRooms(){
+	window.onbeforeunload=null;
+	$("#submitRooms").attr('disabled',true);
+	 location.href="assemble.htm?houseid=$!{house_id}"
+
+}
+ var scale;
+ 
+ function addContorller(event,_this,_scale){
+ 	var cxt=_this.getContext("2d"); 
+ 
+ 	cxt.clearRect(1,1,_this.width-1,_this.height-1);
+	var s=$(_scale).val();
+	var offsetX = event.offsetX ? event.offsetX : event.layerX; 
+	var offsetY = event.offsetY ? event.offsetY : event.layerY; 
+	var conX=offsetX*s;
+	var conY=(150-offsetY)*s;
+	cxt.strokeRect(offsetX,offsetY,15,15);
+	cxt.font = "19px Courier New";
+    cxt.fillStyle = "blue";
+	cxt.fillText("T",offsetX+2,offsetY+13);
+ 	$(_this).next().val([conX,conY]);
+ 	cxt.stroke();
+ }
+
+window.onload = function() {
+    if (window.applicationCache) {
+        //console.log("你的浏览器支持HTML5");
+    } else {
+        //console.log("你的浏览器不支持HTML5");
+    }
+}
+window.onbeforeunload = function(){
+    return '关闭或刷新页面时您的数据将丢失，需要重新填写！';
+}
+
+
+function hidenAndShow(_this,_p,_imgInput,shapeType){
+	var srcStr="images/Triangle.png";
+	switch(shapeType){
+		case 0:
+			srcStr="images/Triangle.png";
+			break;
+		case 1:
+			srcStr="images/Rect.png";
+			break;
+		case 2:
+			srcStr="images/Trapezoid.png";
+			break;
+		case 3:
+			srcStr="images/Circle.png";
+			break;
+		case 4:
+			srcStr="images/Lpolygon.png";
+			break;
+	
+	}
+	$('#'+_imgInput).attr("src",srcStr);
+	$(_p).find('span').hide();
+	$(_this).show();
+}
+function hideShowParent(_this,checkType,roomName,roomShapeID){
+	var ctrl=$(_this).prev().val();
+	if(ctrl==''){
+		alert("请点击图形设置温控器位置");
+		return;
+	}
+	var sides=[];
+	var shape_type;
+	var checkRadio=$("input[name='"+checkType+"']:checked").val();
+	$('#'+checkRadio).find('input').each(function(){ 
+		if(this.type == 'hidden'){
+			shape_type=$(this).val();
+		}else{
+			sides.push($(this).val());
+		}
+	});
+	var data={"contor":ctrl,"house_id": $('#house_id').val(),"room_id":$('#'+roomShapeID).val(),"room_type":$('#'+checkRadio).nextDes('input').val(),"shape_type":shape_type,"shape_name":$("#"+roomName).html(),"sides":sides.join()};
+	$.ajax({
+	     type: "POST",
+	     url: "addRoom.htm",
+	     data: data,
+	     dataType: "json",
+	     success: function(result){
+	     	var reval = jQuery.parseJSON(result); 
+	     	if(reval.succ){
+	     		$('#'+roomShapeID).val(reval.result);
+				$(_this).parentDes('li').css('height', '50px');
+				$('.divhide').hide()
+				$(_this).parentDes('li').find('div img').show()
+				$(_this).parents('li').nextDes('li').find('div').show();
+				$(_this).parentDes('li').nextDes('li').css('height', '420px');
+	     	}else{
+	     		alert(reval.msg)
+	     	}
+	     }
+     });
+}
+function showMeHideother(_this){
+	$('ol').find('li').css('height','50px')
+	$('.divhide').hide()
+	$(_this).parentDes('li').css('height', '420px');
+	$(_this).parentDes('li').find('div').show();
+	
+}	
+
+function removeRoom(_this,roomID){
+		var room_id=$('#'+roomID).val();
+		if(room_id !=""){
+			$.ajax({
+		     type: "POST",
+		     url: "removeRoom.htm",
+		     data: {"house_id":$('#house_id').val() , "room_id": room_id },
+		     dataType: "json",
+		     success: function(result){
+		     	var reval = jQuery.parseJSON(result);
+		     	if(reval.succ){
+		     		console.log(reval.result);
+		     		$(_this).parentDes('li').remove();
+		     	}else{
+		     		alert(reval.msg)
+					$(_this).parentDes('li').remove();
+		     	}
+			  }
+		    });
+		}
+		$(_this).parentDes('li').remove();
+}
+ function getLidiv(){
+ 		$("#submitRooms").show();
+ 		$("#getDivbutton").attr('disabled',true);
+   		var dataStr="bedRoom.htm?bedRoomNum="+$("#bedRoom").val()+"&livingRoomNum="+$("#livingRoom").val()+"&kitchenNum="+$("#kitchen").val()+"&bathRoomNum="+$("#bathRoom").val()+"&balconyNum="+$("#balcony").val();
+		$.get(dataStr,function(data){ 
+			$("#houseDiv").html(data); 
+			if (!$.support.leadingWhitespace) {
+				G_vmlCanvasManager.init_(document);
+			} 
+		});
+ }
+function sRect(A,B,cid,_scale){//矩形
+	var C=A/150>B/300?A/150:B/300;
+	scale=C;
+	var x0,x1,x2,x3,y0,y1,y2,y3;
+	x0=0;
+	y0=150;
+	x1=B/C;
+	y1=150;
+	x2=B/C;
+	y2=150-A/C;
+	x3=0;
+	y3=150-A/C;
+	$(_scale).val(C);
+	var canvas=document.getElementById(cid);
+	canvas.setAttribute('width','300');
+	canvas.setAttribute('height','150');
+	$(canvas).next().val("");
+    var square=canvas.getContext("2d");
+	square.clearRect(0,0,canvas.width,canvas.height);
+	square.beginPath();//开始准备绘制新的图形
+	square.strokeStyle = "blue";
+	square.moveTo(x0,y0);
+	square.lineTo(x1,y1);//A边
+	square.moveTo(x1,y1);
+	square.lineTo(x2,y2);//A边
+	square.moveTo(x2,y2);
+	square.lineTo(x3,y3);//A边
+	square.moveTo(x3,y3);
+	square.lineTo(x0,y0);//A边
+	square.stroke();
+}
+
+function sTriangle(A,B,cid,_scale){//三角形
+	var C=A/150>B/300?A/150:B/300;
+	$(_scale).val(C);
+	var x0,y0,x1,y1,x2,y2;
+	x0=0;
+	y0=150;
+	x1=B/C;
+	y1=150;
+	x2=0;
+	y2=150-A/C;
+	var canvas=document.getElementById(cid);
+	$(canvas).next().val("");
+	canvas.setAttribute('width','300');
+	canvas.setAttribute('height','150');
+	var square=canvas.getContext('2d');
+	square.clearRect(0,0,canvas.width,canvas.height);
+	square.beginPath();//开始准备绘制新的图形
+	square.strokeStyle = "blue";
+	square.moveTo(x0,y0);
+	square.lineTo(x1,y1);//A边
+	square.moveTo(x1,y1);
+	square.lineTo(x2,y2);//A边
+	square.moveTo(x2,y2);
+	square.lineTo(x0,y0);//A边
+	square.stroke();
+}
+
+function sTrapezoid(A,B,C,cid,_scale){//梯形
+	var D=A>C?A:C;
+	var E=B/150>D/300?B/150:D/300;
+	$(_scale).val(E);
+	var x0,y0,x1,y1,x2,y2,x3,y3;
+	x0=0;
+	y0=150;
+	x1=C/E;
+	y1=150;
+	x2=A/E;
+	y2=150-B/E;
+	x3=0;
+	y3=150-B/E;
+	var canvas=document.getElementById(cid);
+	$(canvas).next().val("");
+	canvas.setAttribute('width','300');
+	canvas.setAttribute('height','150');
+	var square=canvas.getContext('2d');
+	square.clearRect(0,0,canvas.width,canvas.height);
+	square.beginPath();//开始准备绘制新的图形
+	square.strokeStyle = "blue";
+	square.moveTo(x0,y0);
+	square.lineTo(x1,y1);//A边
+	square.moveTo(x1,y1);
+	square.lineTo(x2,y2);//A边
+	square.moveTo(x2,y2);
+	square.lineTo(x3,y3);//A边
+	square.moveTo(x3,y3);
+	square.lineTo(x0,y0);//A边
+	square.stroke();
+}
+function sLpolygon(A,B,C,D,cid,_scale){//L型
+	var E=A/150>B/300?A/150:B/300;
+	$(_scale).val(E);
+	var x0,x1,x2,x3,x4,x5,y0,y1,y2,y3,y4,y5;
+	x0=0;
+	y0=150;
+	x1=B/E;
+	y1=150;
+	x2=B/E;
+	y2=150-(A/E-C/E);
+	x3=(B/E-D/E);
+	y3=150-(A/E-C/E);
+	x4=(B/E-D/E);
+	y4=150-A/E;
+	x5=0;
+	y5=150-A/E;
+	var canvas=document.getElementById(cid);
+	$(canvas).next().val("");
+	canvas.setAttribute('width','300');
+	canvas.setAttribute('height','150');
+	var square=canvas.getContext('2d');
+	square.clearRect(0,0,canvas.width,canvas.height);
+	square.beginPath();//开始准备绘制新的图形
+	square.strokeStyle = "blue";
+	square.moveTo(x0,y0);
+	square.lineTo(x5,y5);//A边
+	square.moveTo(x0,y0);
+	square.lineTo(x1,y1);//B边
+	square.moveTo(x1,y1);
+	square.lineTo(x2,y2);//B边
+	square.moveTo(x2,y2);
+	square.lineTo(x3,y3);//B边
+	square.moveTo(x3,y3);
+	square.lineTo(x4,y4);//B边
+	square.moveTo(x4,y4);
+	square.lineTo(x5,y5);//B边
+	square.stroke();
+	
+}
+
+function sCircle(w,h,cid,_scale){//扇型
+	var canvas=document.getElementById(cid);
+	$(canvas).next().val("");
+	var E=w/300>h/150?w/300:h/150;
+	$(_scale).val(E);
+	var x=w/2;//圆心X
+	var y=h-getR(w,h);//圆心Y
+	var x0=0.0;
+	var y0=0.0;
+	var x1=w;
+	var y1=0.0;
+	var r=getR(w,h);
+	var ab=2*Math.PI-getDirRad(x1-x,y1-y);//起始弧度
+	var ae=2*Math.PI-getDirRad(x0-x,y0-y);//终止弧度
+	canvas.setAttribute('width','300');
+	canvas.setAttribute('height','150');
+	var square=canvas.getContext('2d');
+	square.clearRect(0,0,canvas.width,canvas.height);
+	square.beginPath();//开始准备绘制新的图形
+    square.arc(x/E,150-y/E,r/E,ab,ae,true);
+    square.strokeStyle = 'blue';
+    square.closePath();
+    square.stroke();
+}
+
+</script>
+</html>
+

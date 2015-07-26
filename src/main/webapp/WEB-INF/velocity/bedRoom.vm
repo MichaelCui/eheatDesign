@@ -1,0 +1,285 @@
+<ol id="ol1">
+#if($bedRoomNum>=1)
+#foreach($i in [1..$bedRoomNum])
+		<li class="title" > 
+			<input type="hidden" value="" id="BedRoomShapeID$i"/>
+			<input type="hidden" value="" id="BedRoomScale$i"/>
+	 		<div onclick="showMeHideother(this)"> <h2 id="BedRoomName$i">卧室$i</h2><img class="mark" src="images/check_mark.png" /><ul class="delul" onclick="removeRoom(this,'BedRoomShapeID$i')"><img  class="del" src="images/delete.png" /></ul> </div> 
+	 		<div class="divhide">
+				<p>
+					<img src="" id="bedRoomImg${i}"/>
+					<input name="roomRadio$i" type="radio" value="bedRoom_rectangle${i}" onclick="hidenAndShow(bedRoom_rectangle${i},bedRoom_p${i},'bedRoomImg${i}',1)" />矩形 
+					<input name="roomRadio$i" type="radio" value="bedRoom_trapezoid${i}" onclick="hidenAndShow(bedRoom_trapezoid${i},bedRoom_p${i},'bedRoomImg${i}',2)"/>梯形
+					<input name="roomRadio$i" type="radio" value="bedRoom_circle${i}" onclick="hidenAndShow(bedRoom_circle${i},bedRoom_p${i},'bedRoomImg${i}',3)"/>扇形 
+					<input name="roomRadio$i" type="radio" value="bedRoom_triangle${i}" onclick="hidenAndShow(bedRoom_triangle${i},bedRoom_p${i},'bedRoomImg${i},0')"/>三角形 
+					<input name="roomRadio$i" type="radio" value="bedRoom_Lpolygon${i}" onclick="hidenAndShow(bedRoom_Lpolygon${i},bedRoom_p${i},'bedRoomImg${i}',4)"/>L型 
+				</p>
+				<p id="bedRoom_p${i}">
+					<span id="bedRoom_rectangle${i}">
+						<input type="hidden" value="1" />
+						A<input id="${i}bedRoom_rectangle_A" type="text" style="width:80px"  onkeyup="sRect($('#${i}bedRoom_rectangle_A').val(),$('#${i}bedRoom_rectangle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bedRoom_rectangle_B" type="text" style="width:80px"onkeyup="sRect($('#${i}bedRoom_rectangle_A').val(),$('#${i}bedRoom_rectangle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm  
+					</span>
+					<span id="bedRoom_triangle${i}">
+						<input type="hidden" value="0" />
+						A<input id="${i}bedRoom_triangle_A" type="text" style="width:80px" onkeyup="sTriangle($('#${i}bedRoom_triangle_A').val(),$('#${i}bedRoom_triangle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bedRoom_triangle_B" type="text" style="width:80px" onkeyup="sTriangle($('#${i}bedRoom_triangle_A').val(),$('#${i}bedRoom_triangle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm  
+					</span>
+					<span id="bedRoom_trapezoid${i}">
+						<input type="hidden" value="2" />
+						A<input id="${i}bedRoom_trapezoid_A" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bedRoom_trapezoid_A').val(),$('#${i}bedRoom_trapezoid_B').val(),$('#${i}bedRoom_trapezoid_C').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bedRoom_trapezoid_B" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bedRoom_trapezoid_A').val(),$('#${i}bedRoom_trapezoid_B').val(),$('#${i}bedRoom_trapezoid_C').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}bedRoom_trapezoid_C" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bedRoom_trapezoid_A').val(),$('#${i}bedRoom_trapezoid_B').val(),$('#${i}bedRoom_trapezoid_C').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm 
+					</span>
+					<span id="bedRoom_Lpolygon${i}">
+						<input type="hidden" value="4" />
+						A<input id="${i}bedRoom_Lpolygon_A" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bedRoom_Lpolygon_A').val(),$('#${i}bedRoom_Lpolygon_B').val(),$('#${i}bedRoom_Lpolygon_C').val(),$('#${i}bedRoom_Lpolygon_D').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bedRoom_Lpolygon_B" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bedRoom_Lpolygon_A').val(),$('#${i}bedRoom_Lpolygon_B').val(),$('#${i}bedRoom_Lpolygon_C').val(),$('#${i}bedRoom_Lpolygon_D').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}bedRoom_Lpolygon_C" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bedRoom_Lpolygon_A').val(),$('#${i}bedRoom_Lpolygon_B').val(),$('#${i}bedRoom_Lpolygon_C').val(),$('#${i}bedRoom_Lpolygon_D').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;D
+						<input id="${i}bedRoom_Lpolygon_D" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bedRoom_Lpolygon_A').val(),$('#${i}bedRoom_Lpolygon_B').val(),$('#${i}bedRoom_Lpolygon_C').val(),$('#${i}bedRoom_Lpolygon_D').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm
+					</span>
+					<span id="bedRoom_circle${i}">
+						<input type="hidden" value="3" />
+						A<input id="${i}bedRoom_circle_A" type="text" style="width:80px" onkeyup="sCircle($('#${i}bedRoom_circle_A').val(),$('#${i}bedRoom_circle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bedRoom_circle_B" type="text" style="width:80px" onkeyup="sCircle($('#${i}bedRoom_circle_A').val(),$('#${i}bedRoom_circle_B').val(),'bedRoomCanvas${i}',BedRoomScale$i)"></input>mm  
+					</span>																						
+					<input type="hidden" value="0" />
+				</p>
+				<div>
+					<canvas style="width:300px;height:150px;" id="bedRoomCanvas${i}" onmousedown="addContorller(event,this,BedRoomScale$i)"></canvas>  
+					<input  type="hidden" type="text" />
+					<button id="but1"  class="confirmButton" onclick="hideShowParent(this,'roomRadio$i','BedRoomName$i','BedRoomShapeID$i')">保存该房间</button>
+				</div>
+	 		</div>
+ 		</li> 
+#end
+#end
+</ol>
+<ol id="ol2">
+#if($livingRoomNum>=1)
+#foreach($i in [1..$livingRoomNum])
+		<li class="title" > 
+			<input type="hidden" value="" id="livingRoomShapeID$i"/>
+			<input type="hidden" value="" id="livingRoomScale$i"/>
+	 		<div onclick="showMeHideother(this)"> <h2 id="livingRoomName$i">客厅$i</h2><img class="mark" src="images/check_mark.png" />   <ul class="delul" onclick="removeRoom(this,'livingRoomShapeID$i')"><img  class="del" src="images/delete.png" /></ul> </div> 
+	 		<div class="divhide">
+				<p>
+					<img src="" id="livingRoomImg${i}"/>
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_rectangle${i}" onclick="hidenAndShow(livingRoom_rectangle${i},livingRoom_p${i},'livingRoomImg${i}',1)" />矩形 
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_trapezoid${i}" onclick="hidenAndShow(livingRoom_trapezoid${i},livingRoom_p${i},'livingRoomImg${i}',2)"/>梯形
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_circle${i}" onclick="hidenAndShow(livingRoom_circle${i},livingRoom_p${i},'livingRoomImg${i}',3)"/>扇形 
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_triangle${i}" onclick="hidenAndShow(livingRoom_triangle${i},livingRoom_p${i},'livingRoomImg${i}',0)"/>三角形 
+					<input name="livingRoomRadio$i" type="radio" value="livingRoom_Lpolygon${i}" onclick="hidenAndShow(livingRoom_Lpolygon${i},livingRoom_p${i},'livingRoomImg${i}',4)"/>L型 
+				</p>
+				<p id="livingRoom_p${i}">
+					<span id="livingRoom_rectangle${i}">
+						<input type="hidden" value="1" />
+						A<input id="${i}livingRoom_rectangle_A" type="text" style="width:80px" onkeyup="sRect($('#${i}livingRoom_rectangle_A').val(),$('#${i}livingRoom_rectangle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}livingRoom_rectangle_B" type="text" style="width:80px" onkeyup="sRect($('#${i}livingRoom_rectangle_A').val(),$('#${i}livingRoom_rectangle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm  
+					</span>
+					<span id="livingRoom_triangle${i}">
+						<input type="hidden" value="0" />
+						A<input id="${i}livingRoom_triangle_A" type="text" style="width:80px" onkeyup="sTriangle($('#${i}livingRoom_triangle_A').val(),$('#${i}livingRoom_triangle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}livingRoom_triangle_B" type="text" style="width:80px"onkeyup="sTriangle($('#${i}livingRoom_triangle_A').val(),$('#${i}livingRoom_triangle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm  
+					</span>
+					<span id="livingRoom_trapezoid${i}">
+						<input type="hidden" value="2" />
+						A<input id="${i}livingRoom_trapezoid_A" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}livingRoom_trapezoid_A').val(),$('#${i}livingRoom_trapezoid_B').val(),$('#${i}livingRoom_trapezoid_C').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}livingRoom_trapezoid_B" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}livingRoom_trapezoid_A').val(),$('#${i}livingRoom_trapezoid_B').val(),$('#${i}livingRoom_trapezoid_C').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}livingRoom_trapezoid_C" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}livingRoom_trapezoid_A').val(),$('#${i}livingRoom_trapezoid_B').val(),$('#${i}livingRoom_trapezoid_C').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm 
+					</span>
+					<span id="livingRoom_Lpolygon${i}">
+						<input type="hidden" value="4" />
+						A<input id="${i}livingRoom_Lpolygon_A" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}livingRoom_Lpolygon_A').val(),$('#${i}livingRoom_Lpolygon_B').val(),$('#${i}livingRoom_Lpolygon_C').val(),$('#${i}livingRoom_Lpolygon_D').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}livingRoom_Lpolygon_B" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}livingRoom_Lpolygon_A').val(),$('#${i}livingRoom_Lpolygon_B').val(),$('#${i}livingRoom_Lpolygon_C').val(),$('#${i}livingRoom_Lpolygon_D').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}livingRoom_Lpolygon_C" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}livingRoom_Lpolygon_A').val(),$('#${i}livingRoom_Lpolygon_B').val(),$('#${i}livingRoom_Lpolygon_C').val(),$('#${i}livingRoom_Lpolygon_D').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;D
+						<input id="${i}livingRoom_Lpolygon_D" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}livingRoom_Lpolygon_A').val(),$('#${i}livingRoom_Lpolygon_B').val(),$('#${i}livingRoom_Lpolygon_C').val(),$('#${i}livingRoom_Lpolygon_D').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm
+					</span>
+					<span id="livingRoom_circle${i}">
+						<input type="hidden" value="3" /> 
+						A<input id="${i}livingRoom_circle_A" type="text" style="width:80px" onkeyup="sCircle($('#${i}livingRoom_circle_A').val(),$('#${i}livingRoom_circle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}livingRoom_circle_B" type="text" style="width:80px" onkeyup="sCircle($('#${i}livingRoom_circle_A').val(),$('#${i}livingRoom_circle_B').val(),'livingRoomCanvas${i}',livingRoomScale$i)"></input>mm  
+					</span>		
+					<input type="hidden" value="1" />																				
+				</p>
+				<div>
+					<canvas id="livingRoomCanvas${i}" onmousedown="addContorller(event,this,livingRoomScale$i)"></canvas> 
+					<input  type="hidden" type="text" />
+					<button id="but1"  class="confirmButton" onclick="hideShowParent(this,'livingRoomRadio$i','livingRoomName$i','livingRoomShapeID$i')">保存该房间</button>
+				</div>
+	 		</div>
+ 		</li> 
+#end
+#end
+</ol>
+<ol id="ol3">
+#if($kitchenNum>=1)
+#foreach($i in [1..$kitchenNum])
+		<li class="title" > 
+			<input type="hidden" value="" id="kitchenRoomShapeID$i"/>
+			<input type="hidden" value="" id="kitchenRoomScale$i"/>
+	 		<div onclick="showMeHideother(this)"> <h2 id="kitchenRoomName$i">厨房$i</h2><img class="mark" src="images/check_mark.png" />   <ul class="delul" onclick="removeRoom(this,'kitchenRoomShapeID$i')"><img  class="del" src="images/delete.png" /></ul> </div> 
+	 		<div class="divhide">
+				<p>
+					<img src="" id="kitchenRoomImg${i}"/>
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_rectangle${i}" onclick="hidenAndShow(kitchen_rectangle${i},kitchen_p${i},'kitchenRoomImg${i}',1)" />矩形 
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_trapezoid${i}" onclick="hidenAndShow(kitchen_trapezoid${i},kitchen_p${i},'kitchenRoomImg${i}',2)"/>梯形
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_circle${i}" onclick="hidenAndShow(kitchen_circle${i},kitchen_p${i},'kitchenRoomImg${i}',3)"/>扇形 
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_triangle${i}" onclick="hidenAndShow(kitchen_triangle${i},kitchen_p${i},'kitchenRoomImg${i}',0)"/>三角形 
+					<input name="kitchenRoomRadio$i" type="radio" value="kitchen_Lpolygon${i}" onclick="hidenAndShow(kitchen_Lpolygon${i},kitchen_p${i},'kitchenRoomImg${i}',4)"/>L型 
+				</p>
+				<p id="kitchen_p${i}">
+					<span id="kitchen_rectangle${i}">
+						<input type="hidden" value="1" /> 
+						A<input id="${i}kitchen_rectangle_A" type="text" style="width:80px" onkeyup="sRect($('#${i}kitchen_rectangle_A').val(),$('#${i}kitchen_rectangle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}kitchen_rectangle_B" type="text" style="width:80px"onkeyup="sRect($('#${i}kitchen_rectangle_A').val(),$('#${i}kitchen_rectangle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm  
+					</span>
+					<span id="kitchen_triangle${i}">
+						<input type="hidden" value="0" /> 
+						A<input id="${i}kitchen_triangle_A" type="text" style="width:80px" onkeyup="sTriangle($('#${i}kitchen_triangle_A').val(),$('#${i}kitchen_triangle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}kitchen_triangle_B" type="text" style="width:80px"onkeyup="sTriangle($('#${i}kitchen_triangle_A').val(),$('#${i}kitchen_triangle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm  
+					</span>
+					<span id="kitchen_trapezoid${i}">
+						<input type="hidden" value="2" /> 
+						A<input id="${i}kitchen_trapezoid_A" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}kitchen_trapezoid_A').val(),$('#${i}kitchen_trapezoid_B').val(),$('#${i}kitchen_trapezoid_C').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}kitchen_trapezoid_B" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}kitchen_trapezoid_A').val(),$('#${i}kitchen_trapezoid_B').val(),$('#${i}kitchen_trapezoid_C').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}kitchen_trapezoid_C" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}kitchen_trapezoid_A').val(),$('#${i}kitchen_trapezoid_B').val(),$('#${i}kitchen_trapezoid_C').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm 
+					</span>
+					<span id="kitchen_Lpolygon${i}">
+						<input type="hidden" value="4" /> 
+						A<input id="${i}kitchen_Lpolygon_A" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}kitchen_Lpolygon_A').val(),$('#${i}kitchen_Lpolygon_B').val(),$('#${i}kitchen_Lpolygon_C').val(),$('#${i}kitchen_Lpolygon_D').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}kitchen_Lpolygon_B" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}kitchen_Lpolygon_A').val(),$('#${i}kitchen_Lpolygon_B').val(),$('#${i}kitchen_Lpolygon_C').val(),$('#${i}kitchen_Lpolygon_D').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}kitchen_Lpolygon_C" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}kitchen_Lpolygon_A').val(),$('#${i}kitchen_Lpolygon_B').val(),$('#${i}kitchen_Lpolygon_C').val(),$('#${i}kitchen_Lpolygon_D').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;D
+						<input id="${i}kitchen_Lpolygon_D" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}kitchen_Lpolygon_A').val(),$('#${i}kitchen_Lpolygon_B').val(),$('#${i}kitchen_Lpolygon_C').val(),$('#${i}kitchen_Lpolygon_D').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm
+					</span>
+					<span id="kitchen_circle${i}">
+						<input type="hidden" value="3" /> 
+						A<input id="${i}kitchen_circle_A" type="text" style="width:80px" onkeyup="sCircle($('#${i}kitchen_circle_A').val(),$('#${i}kitchen_circle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}kitchen_circle_B" type="text" style="width:80px" onkeyup="sCircle($('#${i}kitchen_circle_A').val(),$('#${i}kitchen_circle_B').val(),'kitchenCanvas${i}',kitchenRoomScale$i)"></input>mm  
+					</span>		
+					<input type="hidden" value="2" />																				
+				</p>
+				<div>
+					<canvas id="kitchenCanvas${i}" onmousedown="addContorller(event,this,kitchenRoomScale$i)"></canvas>  
+					<input  type="hidden" type="text" />
+					<button id="but1"  class="confirmButton" onclick="hideShowParent(this,'kitchenRoomRadio$i','kitchenRoomName$i','kitchenRoomShapeID$i')">保存该房间</button>
+				</div>
+	 		</div>
+ 		</li> 
+#end
+#end
+</ol>
+<ol id="ol4">
+#if($bathRoomNum>=1)
+#foreach($i in [1..$bathRoomNum])
+		<li class="title" > 
+			<input type="hidden" value="" id="bathRoomShapeID$i"/>
+			<input type="hidden" value="" id="bathRoomScale$i"/>
+	 		<div onclick="showMeHideother(this)"> <h2 id="bathRoomName$i">卫生间$i</h2><img class="mark" src="images/check_mark.png" />   <ul class="delul" onclick="removeRoom(this,'bathRoomShapeID$i')"><img  class="del" src="images/delete.png" /></ul> </div> 
+	 		<div class="divhide">
+				<p>
+					<img src="" id="bathRoomImg${i}"/>
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_rectangle${i}" onclick="hidenAndShow(bathRoom_rectangle${i},bathRoom_p${i},'bathRoomImg${i}',1)" />矩形 
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_trapezoid${i}" onclick="hidenAndShow(bathRoom_trapezoid${i},bathRoom_p${i},'bathRoomImg${i}',2)"/>梯形
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_circle${i}" onclick="hidenAndShow(bathRoom_circle${i},bathRoom_p${i},'bathRoomImg${i}',3)"/>扇形 
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_triangle${i}" onclick="hidenAndShow(bathRoom_triangle${i},bathRoom_p${i},'bathRoomImg${i}',0)"/>三角形 
+					<input name="bathRoomRadio$i" type="radio" value="bathRoom_Lpolygon${i}" onclick="hidenAndShow(bathRoom_Lpolygon${i},bathRoom_p${i},'bathRoomImg${i}',4)"/>L型 
+				</p>
+				<p id="bathRoom_p${i}">
+					<span id="bathRoom_rectangle${i}">
+						<input type="hidden" value="1" /> 
+						A<input id="${i}bathRoom_rectangle_A" type="text" style="width:80px" onkeyup="sRect($('#${i}bathRoom_rectangle_A').val(),$('#${i}bathRoom_rectangle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;B
+						 <input id="${i}bathRoom_rectangle_B" type="text" style="width:80px" onkeyup="sRect($('#${i}bathRoom_rectangle_A').val(),$('#${i}bathRoom_rectangle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm  
+					</span>
+					<span id="bathRoom_triangle${i}">
+						<input type="hidden" value="0" /> 
+						A<input id="${i}bathRoom_triangle_A" type="text" style="width:80px" onkeyup="sTriangle($('#${i}bathRoom_triangle_A').val(),$('#${i}bathRoom_triangle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bathRoom_triangle_B" type="text" style="width:80px" onkeyup="sTriangle($('#${i}bathRoom_triangle_A').val(),$('#${i}bathRoom_triangle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm  
+					</span>
+					<span id="bathRoom_trapezoid${i}">
+						<input type="hidden" value="2" /> 
+						A<input id="${i}bathRoom_trapezoid_A" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bathRoom_trapezoid_A').val(),$('#${i}bathRoom_trapezoid_B').val(),$('#${i}bathRoom_trapezoid_C').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bathRoom_trapezoid_B" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bathRoom_trapezoid_A').val(),$('#${i}bathRoom_trapezoid_B').val(),$('#${i}bathRoom_trapezoid_C').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}bathRoom_trapezoid_C" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}bathRoom_trapezoid_A').val(),$('#${i}bathRoom_trapezoid_B').val(),$('#${i}bathRoom_trapezoid_C').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm 
+					</span>
+					<span id="bathRoom_Lpolygon${i}">
+						<input type="hidden" value="4" /> 
+						A<input id="${i}bathRoom_Lpolygon_A" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bathRoom_Lpolygon_A').val(),$('#${i}bathRoom_Lpolygon_B').val(),$('#${i}bathRoom_Lpolygon_C').val(),$('#${i}bathRoom_Lpolygon_D').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bathRoom_Lpolygon_B" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bathRoom_Lpolygon_A').val(),$('#${i}bathRoom_Lpolygon_B').val(),$('#${i}bathRoom_Lpolygon_C').val(),$('#${i}bathRoom_Lpolygon_D').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}bathRoom_Lpolygon_C" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bathRoom_Lpolygon_A').val(),$('#${i}bathRoom_Lpolygon_B').val(),$('#${i}bathRoom_Lpolygon_C').val(),$('#${i}bathRoom_Lpolygon_D').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;D
+						<input id="${i}bathRoom_Lpolygon_D" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}bathRoom_Lpolygon_A').val(),$('#${i}bathRoom_Lpolygon_B').val(),$('#${i}bathRoom_Lpolygon_C').val(),$('#${i}bathRoom_Lpolygon_D').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm
+					</span>
+					<span id="bathRoom_circle${i}">
+						<input type="hidden" value="3" /> 
+						A<input id="${i}bathRoom_circle_A" type="text" style="width:80px" onkeyup="sCircle($('#${i}bathRoom_circle_A').val(),$('#${i}bathRoom_circle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}bathRoom_circle_B" type="text" style="width:80px" onkeyup="sCircle($('#${i}bathRoom_circle_A').val(),$('#${i}bathRoom_circle_B').val(),'bathRoomCanvas${i}',bathRoomScale$i)"></input>mm  
+					</span>	
+					<input type="hidden" value="3" />																					
+				</p>
+				<div>
+					<canvas id="bathRoomCanvas${i}" onmousedown="addContorller(event,this,bathRoomScale$i)"></canvas> 
+					<input  type="hidden" type="text" />
+					 <button id="but1"  class="confirmButton" onclick="hideShowParent(this,'bathRoomRadio$i','bathRoomName$i','bathRoomShapeID$i')">保存该房间</button>
+				</div>
+	 		</div>
+ 		</li> 
+#end
+#end
+</ol>
+<ol id="ol5">
+#if($balconyNum>=1)
+#foreach($i in [1..$balconyNum])
+		<li class="title" > 
+			<input type="hidden" value="" id="balconyRoomShapeID$i"/>
+			<input type="hidden" value="" id="balconyRoomScale$i"/>
+	 		<div onclick="showMeHideother(this)"> <h2 id="balconyRoomName$i">阳台$i</h2><img class="mark" src="images/check_mark.png" />    <ul  class="delul" onclick="removeRoom(this,'balconyRoomShapeID$i')"><img  class="del" src="images/delete.png" /></ul> </div> 
+	 		<div class="divhide">
+				<p>
+					<img src="" id="balconyRoomImg${i}"/>
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_rectangle${i}" onclick="hidenAndShow(balcony_rectangle${i},balcony_p${i},'balconyRoomImg${i}',1)" />矩形 
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_trapezoid${i}" onclick="hidenAndShow(balcony_trapezoid${i},balcony_p${i},'balconyRoomImg${i}',2)"/>梯形
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_circle${i}" onclick="hidenAndShow(balcony_circle${i},balcony_p${i},'balconyRoomImg${i}',3)"/>扇形 
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_triangle${i}" onclick="hidenAndShow(balcony_triangle${i},balcony_p${i},'balconyRoomImg${i}',0)"/>三角形 
+					<input name="balconyRoomRadio$i" type="radio" value="balcony_Lpolygon${i}" onclick="hidenAndShow(balcony_Lpolygon${i},balcony_p${i},'balconyRoomImg${i}',4)"/>L型 
+				</p>
+				<p id="balcony_p${i}">
+					<span id="balcony_rectangle${i}">
+						<input type="hidden" value="1" /> 
+						A<input id="${i}balcony_rectangle_A" type="text" style="width:80px" onkeyup="sRect($('#${i}balcony_rectangle_A').val(),$('#${i}balcony_rectangle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}balcony_rectangle_B" type="text" style="width:80px" onkeyup="sRect($('#${i}balcony_rectangle_A').val(),$('#${i}balcony_rectangle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm  
+					</span>
+					<span id="balcony_triangle${i}">
+						<input type="hidden" value="0" /> 
+						A<input id="${i}balcony_triangle_A" type="text" style="width:80px" onkeyup="sTriangle($('#${i}balcony_triangle_A').val(),$('#${i}balcony_triangle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}balcony_triangle_B" type="text" style="width:80px" onkeyup="sTriangle($('#${i}balcony_triangle_A').val(),$('#${i}balcony_triangle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm  
+					</span>
+					<span id="balcony_trapezoid${i}">
+						<input type="hidden" value="2" /> 
+						A<input id="${i}balcony_trapezoid_A" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}balcony_trapezoid_A').val(),$('#${i}balcony_trapezoid_B').val(),$('#${i}balcony_trapezoid_C').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}balcony_trapezoid_B" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}balcony_trapezoid_A').val(),$('#${i}balcony_trapezoid_B').val(),$('#${i}balcony_trapezoid_C').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}balcony_trapezoid_C" type="text" style="width:80px" onkeyup="sTrapezoid($('#${i}balcony_trapezoid_A').val(),$('#${i}balcony_trapezoid_B').val(),$('#${i}balcony_trapezoid_C').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm 
+					</span>
+					<span id="balcony_Lpolygon${i}">
+						<input type="hidden" value="4" /> 
+						A<input id="${i}balcony_Lpolygon_A" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}balcony_Lpolygon_A').val(),$('#${i}balcony_Lpolygon_B').val(),$('#${i}balcony_Lpolygon_C').val(),$('#${i}balcony_Lpolygon_D').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}balcony_Lpolygon_B" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}balcony_Lpolygon_A').val(),$('#${i}balcony_Lpolygon_B').val(),$('#${i}balcony_Lpolygon_C').val(),$('#${i}balcony_Lpolygon_D').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm  &nbsp;C
+						<input id="${i}balcony_Lpolygon_C" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}balcony_Lpolygon_A').val(),$('#${i}balcony_Lpolygon_B').val(),$('#${i}balcony_Lpolygon_C').val(),$('#${i}balcony_Lpolygon_D').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;D
+						<input id="${i}balcony_Lpolygon_D" type="text" style="width:80px" onkeyup="sLpolygon($('#${i}balcony_Lpolygon_A').val(),$('#${i}balcony_Lpolygon_B').val(),$('#${i}balcony_Lpolygon_C').val(),$('#${i}balcony_Lpolygon_D').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm
+					</span>
+					<span id="balcony_circle${i}">
+						<input type="hidden" value="3" /> 
+						A<input id="${i}balcony_circle_A" type="text" style="width:80px" onkeyup="sCircle($('#${i}balcony_circle_A').val(),$('#${i}balcony_circle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm &nbsp;B
+						<input id="${i}balcony_circle_B" type="text" style="width:80px" onkeyup="sCircle($('#${i}balcony_circle_A').val(),$('#${i}balcony_circle_B').val(),'balconyCanvas${i}',balconyRoomScale$i)"></input>mm  
+					</span>	
+					<input type="hidden" value="4" />																					
+				</p>
+				<div>
+					<canvas id="balconyCanvas${i}" onmousedown="addContorller(event,this,balconyRoomScale$i)"></canvas> 
+					<input  type="hidden" type="text" />
+					<button id="but1"  class="confirmButton" onclick="hideShowParent(this,'balconyRoomRadio$i','balconyRoomName$i','balconyRoomShapeID$i')">保存该房间</button>
+				</div>
+	 		</div>
+ 		</li> 
+#end
+#end
+</ol>

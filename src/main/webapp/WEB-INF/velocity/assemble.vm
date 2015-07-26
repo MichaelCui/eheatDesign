@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" http-equiv="Content-Type" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	
+	<title>发热电缆设计软件</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script src="js/plug-in.js"></script>
+	<script src="js/assemble.js"></script>
+	<script src="js/jquery.json-2.2.js"></script>
+	<script src="js/jquery.hammer.min.js"></script>
+	<!--[if IE]>
+		<script src="js/html5.js"></script>
+		<script src="js/excanvas.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
+		body {
+			font-family:Microsoft YaHei,SimSun,SimHei,Arial,Times New Roman;
+			text-align: center;
+			background: #f1f1f1;
+		}
+		.bgdiv{
+			width: 800px;
+			margin-right: auto;
+			margin-left: auto;
+			background:#f1f1f1;
+		}
+		canvas{
+			width:800px;
+			height:600px;
+			background:#fff;
+		}
+		div ol{
+			margin: 5px 4px 0px 4px;
+			list-style:none;
+			padding-left: 0px;
+			border:1px solid blue;
+			width:100px;
+			height:30px;
+			float:top;
+			background: #999; /* for non-css3 browsers */
+			background: linear-gradient(#ffffff, #ebebeb);
+			text-align: center;
+			line-height:30px;
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ebebeb',GradientType=0 )
+		}
+		li{
+			margin: 5px 112px 0px 4px;
+			list-style:none;
+			padding-left: 0px;
+			border:1px solid blue;
+			width:100px;
+			height:30px;
+			float:top;
+			background: #999; /* for non-css3 browsers */
+			background: linear-gradient(#fff, #ebebeb);
+			text-align: center;
+			line-height:30px;
+		}
+		
+		.contor{
+			position: absolute;  
+			width:220px;
+			max-height:635px;
+			left:50%;
+			margin-left: 404px;
+			margin-top: 30px;
+			
+		}
+		
+		.type{
+			position: absolute;  
+			width:220px;
+			max-height:635px;
+			left:50%;
+			margin-left:-510px;
+			margin-top: 30px;
+			overflow:hidden;
+		}
+		.olbg{
+			background: linear-gradient(#89BFC3,#ebebeb);
+			background: linear-gradient(to bottom, #89BFC3 0%,#ebebeb 100%); 
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#89BFC3', endColorstr='#ebebeb',GradientType=0 )
+		}
+		h2{
+			margin-bottom: 0px;
+			margin-top: 0px;
+			display: inline;
+		}
+	</style>
+</head>
+<body>
+	<!--[if IE]>
+		<span>为达到更佳的流畅度和用户体检推荐使用chrome浏览器：<a href="">点击下载</a></span>
+	<![endif]-->
+
+<div class="type">
+	#foreach($listBean in ${shapeTitleList})
+		<ol value="${listBean.shapeID}">$listBean.roomName</ol>
+	#end
+</div>
+<div class="contor">
+	<li onclick="javascript:change()">图形旋转</li>
+	<ol id="subHouse" >下一步</ol>
+</div>
+<div class="bgdiv">
+	<h2>北京阳光凯瑞电采暖</h2>
+	<div id="houseDiv">
+		<canvas id="canvas1"></canvas>  
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	var shapeList=${shapeList};
+	var downX,downY,moveX,moveY,mouseBean,differenceX,differenceY,pointsNum;
+	var canvas=document.getElementById("canvas1");
+	if (typeof window.G_vmlCanvasManager!="undefined") { 
+        canvas=window.G_vmlCanvasManager.initElement(canvas);
+        var square=canvas.getContext('2d');
+       }else {
+		var square=canvas.getContext('2d');
+    }
+	canvas.setAttribute('width','800')
+	canvas.setAttribute('height','600')
+ 	var copyMouseBean;
+
+
+	$("#canvas1").hammer({}).bind("dragstart", function(ev) {
+       copyMouseBean=$.extend({}, mouseBean);
+   });
+
+ 	$("#canvas1").hammer({}).bind("drag", function(e) {
+		moveDraw(copyMouseBean,e.gesture.deltaX,e.gesture.deltaY);
+		drawing(parseInt(shapeID));
+   });
+   
+   	$("#canvas1").hammer({}).bind("dragend", function(ev) {
+       copyMouseBean=$.extend({}, mouseBean);
+   });
+ 	
+ 	function moveDraw(cMouseBean,deltaX,deltaY){
+ 		   for(m in mouseBean){
+			var t=m.indexOf("x");
+			var y=m.indexOf("y");
+			var conX=m.indexOf("conX");
+			var conY=m.indexOf("conY");
+			if(t==0){//x轴
+				mouseBean[m]=cMouseBean[m]+deltaX;
+			}else if(y==0){//y轴
+				mouseBean[m]=cMouseBean[m]+deltaY;
+			}else if(conX==0){
+				mouseBean[m]=cMouseBean[m]+deltaX;
+			}else if(conY==0){
+				mouseBean[m]=cMouseBean[m]+deltaY;
+			}
+		}
+ 	}
+ 	
+ 	$("body").keydown(function(e){
+ 		switch(e.keyCode){
+ 			case 37://左
+ 				moveDraw(mouseBean,-1,0);
+ 				break;
+ 			case 38://上
+ 				moveDraw(mouseBean,0,-1);
+ 				break;
+ 			case 39://右
+ 				moveDraw(mouseBean,1,0);
+ 				break;
+ 			case 40://下
+ 				moveDraw(mouseBean,0,1);
+ 				break;
+ 		}
+ 		drawing(parseInt(shapeID));
+ 	});
+ 	
+ 	
+	  $('#subHouse').click(function(){
+	  		ajaxAssemble();
+			location.href="getHouseDetail.htm?house_id=$!{house_id}"  	
+	  });
+ 	  
+ 	  
+	$(function() {
+		drawing();
+	});
+	function drawing(_shapeID){
+		square.clearRect(0,0,canvas.width,canvas.height);
+		for(var ti=0;ti<shapeList.length;ti++){
+			square.beginPath();
+			var shapeBean=shapeList[ti];
+			switch(shapeBean.typeNum){
+				case 0:
+					Triangle(shapeBean.points);
+					break;
+				case 1:
+					Rect(shapeBean.points,shapeBean.controller);
+					break;
+				case 2:
+					Rect(shapeBean.points);
+					break;
+				case 3:
+					Circle(shapeBean.points);
+					break;
+				case 4:
+					Lpolygon(shapeBean.points);
+					break;
+			}
+			if(_shapeID==shapeBean.shapeID){
+				square.strokeStyle = "red";//选中的颜色
+				pointsNum=shapeBean.pointNum;
+			}else{
+				square.strokeStyle = "blue";//非选中的颜色
+			}
+			square.closePath();
+			square.stroke();
+		}
+	}	
+
+    var shapeID="";
+	
+    
+    $("ol").click(function(e){
+    	$("ol").removeAttr("class");
+    	shapeID=$(e.target).attr("value");	
+    	$(e.target).attr("class","olbg");	
+    	drawing(parseInt(shapeID));
+    	for(var ti=0;ti<shapeList.length;ti++){
+			var shapeBean=shapeList[ti];
+			if(shapeID==shapeBean.shapeID){
+				mouseBean=shapeBean.points;
+			}
+		}
+    	
+    });
+    
+	function change(){
+		rotate(mouseBean.x0,mouseBean.y0,Math.PI/2,pointsNum,mouseBean);
+		mouseBean.radian=mouseBean.radian+Math.PI/2;
+		drawing(parseInt(shapeID));
+	}
+	function ajaxAssemble(){
+		$.ajax({
+	     type: "POST",
+	     url: "assembleHouse.htm",
+	     data: {"paramsStr":$.toJSON(shapeList),"houseid":"${house_id}","scale":${scale}},
+	     dataType: "json",
+	     success: function(result){
+	     	console.log(result);
+	     }
+     });
+	}
+</script>
+</html>
+

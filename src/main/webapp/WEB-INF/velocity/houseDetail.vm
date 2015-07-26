@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" http-equiv="Content-Type" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Access-Control-Allow-Origin" content="*">
+	<title>发热电缆设计软件</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
+	<script src="js/jquery-2.1.4.js"></script>
+	<script src="js/plug-in.js"></script>
+	<style type="text/css">
+
+		body {
+			text-align: center;
+			background: #f1f1f1;
+		}
+		.bgdiv{
+			width: 800px;
+			margin-right: auto;
+			margin-left: auto;
+			background:#f1f1f1;
+		}
+		h2{
+			margin-bottom: 0px;
+			margin-top: 0px;
+			display: inline;
+		}
+		div ol{
+			margin: 5px 4px 0px 4px;
+			list-style:none;
+			padding-left: 0px;
+			border:1px solid blue;
+			width:100px;
+			height:30px;
+			float:top;
+			background: #999; /* for non-css3 browsers */
+			background: linear-gradient(#ffffff, #ebebeb);
+			text-align: center;
+			line-height:30px;
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ebebeb',GradientType=0 )
+		}
+		table{
+			width: 800px;
+			border: 1px;
+		}
+		table tr{
+			background-color: #ccccff;
+			border: 10px solid #dedede;
+		}
+		font{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+<div class="bgdiv">
+	<h2>北京阳光凯瑞电采暖 </h2>
+	<div>
+		<table border="1px solid" >
+		<tr>
+			<th >房间名称</th>
+			<th >面积  M&sup2 </th>
+			<th >每平米功率   W</th>
+			<th >房间总功率  W</th>
+		</tr>
+		#set($s = 2)
+		#foreach($i in $rooms)
+		<tr  #if($s%2 == 0) style="background-color: #ffffff;" #end>
+			#set($s = $s +1)
+			<td >$i.shape_name</td>
+			<td > $Tools.format($i.area)  </td>
+			<td >
+			<input type="hidden" value="$i.room_id"/>
+			<select  onchange="changePower(this)"> 
+					<option  #if($i.meter_power == 80) selected="selected"  #end value="80" >80</option>
+					<option  #if($i.meter_power == 90) selected="selected"  #end value="90" >90</option>
+					<option  #if($i.meter_power == 100) selected="selected"  #end value="100" >100</option>
+					<option  #if($i.meter_power == 110) selected="selected"  #end value="110" >110</option>
+					<option  #if($i.meter_power == 120) selected="selected"  #end value="120" >120</option>
+					<option  #if($i.meter_power == 130) selected="selected"  #end value="130" >130</option>
+					<option  #if($i.meter_power == 140) selected="selected"  #end value="140" >140</option>
+					<option  #if($i.meter_power == 150) selected="selected"  #end value="150" >150</option>
+				</select>
+			</td>
+			<td >$Tools.format($i.room_power)</td>
+		</tr>
+		#end
+		<tr>
+			<th >电缆品牌 <select onchange="changeBand(this)" >
+				#foreach($i in $wireBands)
+					<option #if($wire_band == $i.band_id) selected="selected"  #end value="$i.band_id"> $i.band_name  </option>
+				#end
+				</select> </th>
+			<th >总面积 <font>$Tools.formatStr("${total_area}")</font> M&sup2</th>
+			<th >预估价格 <font id="totalPrice">$Tools.formatStr("${total_price}")</font> 元</th>
+			<th >总功率  <font id="totalPower">$Tools.formatStr("${total_power}")</font>W</th>
+		</tr>
+		</table>
+		<ol id="subHouse" >下一步</ol>
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+
+	  $('#subHouse').click(function(){
+			location.href="download.htm?house_id=$!{house_id}"  	
+	  });
+
+	function changePower(_this){
+		var area=$(_this).parent().prev().html();
+		var power=$(_this).val();
+		var roomid=$(_this).prev().val();
+		$(_this).parent().next().html(area*power);
+		 $.ajax({
+	     	type: "POST",
+	     	url: "modifyPowerPSM.htm",
+	     	data: {"houseid":"${house_id}","room_id":roomid,"meter_power":power},
+	     	dataType: "json",
+	     	success: function(result){
+	     		var reval = jQuery.parseJSON(result); 
+	     		if(reval.success){
+	     			$(_this).parent().next().html(reval.reVal.room_power.toFixed(2));
+	     			$('#totalPrice').html(reval.reVal.total_price.toFixed(2));
+	     			$('#totalPower').html(reval.reVal.total_power.toFixed(2));
+	     		}
+	     	}
+	     });
+	}
+	function changeBand(_this){
+		var band=$(_this).val();
+		$.ajax({
+	     	type: "POST",
+	     	url: "chooseWireBand.htm",
+	     	data: {"houseid":"${house_id}","band_id":band},
+	     	dataType: "json",
+	     	success: function(result){
+	     		var reval = jQuery.parseJSON(result); 
+	     		if(reval.success){
+					$('#totalPrice').html(reval.reVal.toFixed(2));
+	     		}
+	     	}
+	     });
+	}
+
+</script>
+</html>
+
