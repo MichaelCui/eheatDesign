@@ -6,16 +6,14 @@ import java.sql.SQLException;
 import net.laochu.design.dao.UserDao;
 import net.laochu.design.model.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowCallbackHandler;
-import org.springframework.stereotype.Repository;
 
 
-@Repository
+//@Repository
 public class UserDaoImpl implements UserDao{
 
-	@Autowired
+//	@Autowired
     private JdbcTemplate jdbcTemplate;
 
 	@Override

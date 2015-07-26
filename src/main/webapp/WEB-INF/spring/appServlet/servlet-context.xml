@@ -10,7 +10,7 @@
 		infrastructure -->
 
 	<!-- Enables the Spring MVC @Controller programming model -->
-	<annotation-driven />
+	
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
@@ -18,33 +18,56 @@
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
+		
+	<resources mapping="/images/**" location="/WEB-INF/img/"/>
+	<resources mapping="/js/**" location="/WEB-INF/js/"/>
+	<resources mapping="/css/**" location="/WEB-INF/css/"/>
+	<resources mapping="/fonts/**" location="/WEB-INF/fonts/"/>
+	<resources mapping="/404.htm" location="/WEB-INF/404.html"/>
+	
+  <annotation-driven>
+      <message-converters register-defaults="true">
+          <beans:bean id="fastJsonHttpMessageConverter"  class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <beans:property name="supportedMediaTypes">
+                    <beans:list>
+                        <beans:value>application/json</beans:value>
+                    </beans:list>
+                </beans:property>
+            </beans:bean>
+        </message-converters>
+    </annotation-driven>
+	
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<beans:property name="contentType" value="text/html;charset=UTF-8" />
+		<beans:property name="suffix" value=".vm" />
+		<beans:property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml" /> 
 	</beans:bean>
 
+	<beans:bean id="velocityConfigurer" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<beans:property name="resourceLoaderPath">
+			<beans:value>WEB-INF/velocity/</beans:value>
+		</beans:property>
+		<beans:property name="velocityProperties">
+			<beans:props>
+				<beans:prop key="input.encoding">UTF-8</beans:prop>
+				<beans:prop key="output.encoding">UTF-8</beans:prop>
+				<beans:prop key="contentType">text/html;charset=UTF-8</beans:prop>
+				<beans:prop key="velocimacro.library">macro/macros.vm</beans:prop>
+			</beans:props>
+		</beans:property>
+	</beans:bean>
+	<!-- 定义环境变量文件 -->
+		
+	<beans:bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+       <beans:property name="locations">
+           <beans:list>
+               <beans:value>classpath:config.properties</beans:value>
+           </beans:list>
+       </beans:property>
+    </beans:bean>
+    <beans:bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <beans:property name="properties" ref="configProperties" />
+    </beans:bean>
 	<context:component-scan base-package="net.laochu.design" />
-
-	<context:property-placeholder location="classpath:jdbc.properties" />
-
-	<beans:bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
-		<beans:property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<beans:property name="jdbcUrl" value="jdbc:mysql://182.254.208.55:3306/eheat_design" />
-		<beans:property name="username" value="dba" />
-		<beans:property name="password" value="cjfskadk" />
-		<beans:property name="idleConnectionTestPeriod" value="60" />
-		<beans:property name="idleMaxAge" value="240" />
-		<beans:property name="maxConnectionsPerPartition" value="30" />
-		<beans:property name="minConnectionsPerPartition" value="10" />
-		<beans:property name="partitionCount" value="3" />
-		<beans:property name="acquireIncrement" value="5" />
-		<beans:property name="statementCacheSize" value="100" />
-		<beans:property name="releaseHelperThreads" value="3" />
-	</beans:bean>
-	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<beans:property name="dataSource" ref="dataSource"></beans:property>
-	</beans:bean>
-
-
 </beans:beans>
