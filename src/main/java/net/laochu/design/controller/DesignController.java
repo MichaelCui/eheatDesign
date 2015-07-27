@@ -26,17 +26,24 @@ import com.alibaba.fastjson.JSONObject;
 
 
 /**
- * Handles requests for the application home page.
+ * 设计页使用的Controller
  */
 @Controller
-public class HomeController {
+public class DesignController {
 	
 	@Autowired
     private HttpUtils httpUtils;
 //	private String[] type={"Triangle","Rect","Trapezoid","Circle","Lpolygon"};
 	
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(DesignController.class);
 	
+	/**
+	 * 访问设计页
+	 * @param request
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/index.htm", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest  request,Locale locale, ModelMap model) {
 		try {
@@ -57,9 +64,18 @@ public class HomeController {
 		return new ModelAndView("design");
 	}
 	
-	
+	/**
+	 * 获得户型设置内容，返回值会直接加载到页面上
+	 * @param model
+	 * @param bedRoomNum
+	 * @param livingRoomNum
+	 * @param kitchenNum
+	 * @param bathRoomNum
+	 * @param balconyNum
+	 * @return
+	 */
 	@RequestMapping(value = "/bedRoom.htm", method = RequestMethod.GET)
-	public ModelAndView bedRoom(Locale locale, ModelMap model,Integer bedRoomNum,Integer livingRoomNum,Integer kitchenNum,Integer bathRoomNum,Integer balconyNum) {
+	public ModelAndView bedRoom(ModelMap model,Integer bedRoomNum,Integer livingRoomNum,Integer kitchenNum,Integer bathRoomNum,Integer balconyNum) {
 		model.put("bedRoomNum", bedRoomNum);
 		model.put("livingRoomNum", livingRoomNum);
 		model.put("kitchenNum", kitchenNum);
@@ -68,6 +84,18 @@ public class HomeController {
 		return new ModelAndView("rooms");
 	}
 	
+	/**
+	 * 通过ajax请求添加或修改一个房间
+	 * @param house_id
+	 * @param room_id
+	 * @param shape_name
+	 * @param room_type
+	 * @param shape_type
+	 * @param sides
+	 * @param contor
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/addRoom.htm", method = RequestMethod.POST,produces="application/json")
 	@ResponseBody
 	public String addRoom(String house_id,Integer room_id,String shape_name,Integer room_type,Integer shape_type,Double[] sides,Double[] contor,ModelMap model) {
@@ -97,7 +125,13 @@ public class HomeController {
 		re.put("msg", "服务器通信异常请稍后重试！");
 		return re.toJSONString();
 	}
-	
+	/**
+	 * 删除房间
+	 * @param house_id
+	 * @param room_id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/removeRoom.htm", method = RequestMethod.POST,produces="application/json")
 	@ResponseBody
 	public String roomRoom(String house_id,Integer room_id,ModelMap model) {

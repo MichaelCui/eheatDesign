@@ -25,7 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 
 
 /**
- * Handles requests for the application home page.
+ * 拼图页使用到的Controller
  */
 @Controller
 public class AssembleController {
@@ -33,25 +33,26 @@ public class AssembleController {
 	
 	@Autowired
     private HttpUtils httpUtils;
-	
+	/**
+	 * 跳转进入拼图页
+	 * @param houseid
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/assemble.htm", method = RequestMethod.GET)
 	public ModelAndView assemble(String houseid,ModelMap model) {
 		Map<String,String> params=new HashMap<String,String>();
 		params.put("house_id", houseid);
 		String resultStr=httpUtils.sendHttpPost("getRooms",JSON.toJSONString(params));
-		
 		JSONObject jobject=JSON.parseObject(resultStr);
-
 		Boolean success=(Boolean) jobject.get("succ");
-
 		List<Shape> list=new ArrayList<Shape>();
 		if(success){
 			list=JSON.parseArray(jobject.get("result").toString(), Shape.class);
 		}
-		logger.info(resultStr);
-		
+		//设置比例尺分割基数
 		double dx=0;
-		double dy=0;
+		double dy=600;
 		int size=list.size();
 	    double scaleX=800;
 	    double scaleY=600;
@@ -73,23 +74,23 @@ public class AssembleController {
 		   scaleY=600/5;
 		   flag=5;
 	    }
+	    //获得比例尺
 		double scale=Tools.getScale(list,scaleX,scaleY);
 		List<RoomShape> resultList=new ArrayList<RoomShape>();
-//		for(Shape shape:list){
+		//循环进行绘图数据的添加
 		for(int i=0;i<list.size();i++){
+			//设置图形的偏移量
 			if(i==0){
 				dx=0;
-				dy=600/flag;
-			}else if(i%flag==0 && i+1!=list.size()){
+				dy=dy-600/flag;
+			}else if(i%flag==0 ){
 				dx=0;
 				dy=dy-600/flag;
 			}else{
 				dx=dx+800/flag;;
 			}
-			
-			
-			
 			Shape shape=list.get(i);
+			//根据type填充绘图数据
 			switch(shape.shape_type){
 				case 0:
 					resultList.add(new RoomShape(shape.controller,shape.room_id,shape.room_id,3,0,shape.shape_name,Tools.getTriangle(shape.sides,dx,-dy,scale,shape.controller)));//三角形 3点
@@ -117,7 +118,14 @@ public class AssembleController {
 		return new ModelAndView("assemble");
 	}
 	
-	
+	/**
+	 * 向服务器发送拼合房间的ajax请求
+	 * @param paramsStr
+	 * @param houseid
+	 * @param scale
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/assembleHouse.htm", method = RequestMethod.POST,produces="application/json")
 	@ResponseBody
 	public String assembleHouse(String paramsStr,String houseid,Double scale,ModelMap model){
@@ -138,7 +146,6 @@ public class AssembleController {
 		params.put("house_id", houseid);
 		params.put("rooms", rooms);
 		String resultStr=httpUtils.sendHttpPost("assembleHouse", JSON.toJSONString(params));
-		logger.info(resultStr);
-		return "";
+		return JSON.toJSONString(resultStr);
 	}
 }

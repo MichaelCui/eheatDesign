@@ -50,16 +50,15 @@ public class DownloadAndRegisterController {
 		Boolean success=(Boolean) resultObject.get("succ");
 		if(success){
 			String picName=resultObject.getString("result");
-			model.put("house_id",house_id);
 			model.put("HousePic", picUrl+picName);
 		}else{
 			
 		}
+		model.put("house_id",house_id);
 		return new ModelAndView("down");
 	}
 	@RequestMapping(value = "/smsCode.htm", method = RequestMethod.POST)
 	public ModelAndView smsCode(String phone,ModelMap model,HttpSession session,String code){
-		
 		if(!code.equalsIgnoreCase(session.getAttribute("code").toString())){
 			JSONObject jobject=new JSONObject();
 			jobject.put("succ", false);
@@ -71,7 +70,7 @@ public class DownloadAndRegisterController {
 		params.put("phone", phone);
 		String resultString=httpUtils.sendHttpPost("sendSmsCode", params.toJSONString());
 		model.put("reval", resultString);
-		return new ModelAndView("result");
+		return new ModelAndView("result");//ajax请求，不用@ResponseBody的情况下，使用的返回方式，model里需要put key为reval的Json字符串
 	}
 	@RequestMapping(value = "/validSmsCode.htm", method = RequestMethod.POST)
 	public ModelAndView validSmsCode(String house_id,String phone,String code,ModelMap model){

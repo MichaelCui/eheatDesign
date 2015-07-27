@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Handles requests for the application home page.
+ * 主页请求
  */
 @Controller
 public class IndexController {
@@ -22,7 +22,7 @@ public class IndexController {
 	public ModelAndView home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		return new ModelAndView("index");
+		return new ModelAndView("index");//返回页面只需要写页面名称，不要带.vm
 	}
 	
 }

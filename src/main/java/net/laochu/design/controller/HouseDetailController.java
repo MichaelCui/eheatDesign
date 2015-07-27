@@ -23,13 +23,20 @@ import com.alibaba.fastjson.JSONObject;
 
 
 /**
- * Handles requests for the application home page.
+ * 房间详情Controller
  */
 @Controller
 public class HouseDetailController {
 	private static final Logger logger = LoggerFactory.getLogger(HouseDetailController.class);
 	@Autowired
     private HttpUtils httpUtils;
+	
+	/**
+	 * 获取房间详情数据
+	 * @param house_id
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value = "/getHouseDetail.htm", method = RequestMethod.GET)
 	public ModelAndView assemble(String house_id,ModelMap model) {
 		Map<String,String> params=new HashMap<String,String>();
@@ -59,7 +66,12 @@ public class HouseDetailController {
 	}
 	
 	
-	
+	/**
+	 * 选择线缆品牌
+	 * @param houseid
+	 * @param band_id
+	 * @return
+	 */
 	@RequestMapping(value = "/chooseWireBand.htm", method = RequestMethod.POST)
 	@ResponseBody
 	public String chooseWireBand(String houseid,String band_id){
@@ -90,6 +102,13 @@ public class HouseDetailController {
 		return reVal.toJSONString();
 	}
 	
+	/**
+	 * 修改单位面积功率
+	 * @param houseid
+	 * @param room_id
+	 * @param meter_power
+	 * @return
+	 */
 	@RequestMapping(value = "/modifyPowerPSM.htm", method = RequestMethod.POST)
 	@ResponseBody
 	public String modifyPowerPSM(String houseid,Integer room_id,Integer meter_power){
