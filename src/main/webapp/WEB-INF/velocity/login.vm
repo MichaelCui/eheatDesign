@@ -57,7 +57,7 @@
 </head>
 <body>
 <div class="bgdiv">
-	<h2>电地暖施工辅助设计</h2>
+	<h2>发热电缆设计软件</h2>
 	<div>
 		<table border="1px solid" >
 		<tr>
@@ -67,36 +67,20 @@
 			<th >房间总功率  W</th>
 		</tr>
 		#set($s = 2)
-		#foreach($i in $rooms)
+		#foreach($i in [0..20])
 		<tr  #if($s%2 == 0) style="background-color: #ffffff;" #end>
 			#set($s = $s +1)
-			<td >$i.shape_name</td>
-			<td > $Tools.format($i.area)  </td>
-			<td >
-			<input type="hidden" value="$i.room_id"/>
-			<select  onchange="changePower(this)"> 
-					<option  #if($i.meter_power == 80) selected="selected"  #end value="80" >80</option>
-					<option  #if($i.meter_power == 90) selected="selected"  #end value="90" >90</option>
-					<option  #if($i.meter_power == 100) selected="selected"  #end value="100" >100</option>
-					<option  #if($i.meter_power == 110) selected="selected"  #end value="110" >110</option>
-					<option  #if($i.meter_power == 120) selected="selected"  #end value="120" >120</option>
-					<option  #if($i.meter_power == 130) selected="selected"  #end value="130" >130</option>
-					<option  #if($i.meter_power == 140) selected="selected"  #end value="140" >140</option>
-					<option  #if($i.meter_power == 150) selected="selected"  #end value="150" >150</option>
-				</select>
-			</td>
-			<td >$Tools.format($i.room_power)</td>
+			<td ></td>
+			<td ></td>
+			<td ></td>
+			<td ></td>
 		</tr>
 		#end
 		<tr>
-			<th >电缆品牌 <select onchange="changeBand(this)" >
-				#foreach($i in $wireBands)
-					<option #if($wire_band == $i.band_id) selected="selected"  #end value="$i.band_id"> $i.band_name  </option>
-				#end
-				</select> </th>
-			<th >总面积 <font>$Tools.formatStr("${total_area}")</font> M&sup2</th>
-			<th >预估价格 <font id="totalPrice">$Tools.formatStr("${total_price}")</font> 元</th>
-			<th >总功率  <font id="totalPower">$Tools.formatStr("${total_power}")</font>W</th>
+			<th >	</th>
+			<th ></th>
+			<th ></th>
+			<th ></th>
 		</tr>
 		</table>
 		<ol id="subHouse" >下一步</ol>

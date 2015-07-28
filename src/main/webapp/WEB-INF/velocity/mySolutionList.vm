@@ -1,0 +1,26 @@
+<div>
+	<table border="1px solid" >
+	<tr>
+		<th >日期</th>
+		<th >方案名</th>
+		<th >设计人</th>
+		<th >操作 </th>
+	</tr>
+	#set($s = 2)
+	#foreach($i in $houses)
+	<tr  #if($s%2 == 0) style="background-color: #ffffff;" #end>
+		#set($s = $s +1)
+		<td > $!{i.create_time} </td>
+		<td > $!{i.solution_name}</td>
+		<td > $!{i.author}</td>
+		<td > <a href="javascript:down('${i.file_name}');">下载</a></td>
+	</tr>
+	#end
+	<tr>
+		<th >  </th>
+		<th >  </th>
+		<th >  </th>
+		<th >  </th>
+	</tr>
+	</table>
+</div>

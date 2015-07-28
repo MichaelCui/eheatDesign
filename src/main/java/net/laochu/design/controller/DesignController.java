@@ -11,6 +11,7 @@ import net.laochu.design.model.House;
 import net.laochu.design.model.Shape;
 import net.laochu.design.util.HttpUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,6 @@ public class DesignController {
 	public ModelAndView home(HttpServletRequest  request,Locale locale, ModelMap model) {
 		try {
 			HttpSession session=request.getSession();
-			logger.info(session.getId());
 			String responseString=httpUtils.sendHttpPost("getHouseID",session.getId());
 			JSONObject jobject=JSON.parseObject(responseString);
 			Boolean success=(Boolean) jobject.get("succ");
@@ -64,6 +64,26 @@ public class DesignController {
 		return new ModelAndView("design");
 	}
 	
+	
+	/**
+	 * 获得登录状态
+	 * @param request
+	 * @param locale
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/login.htm", method = RequestMethod.GET)
+	public ModelAndView getLoginStatus(HttpServletRequest  request,Locale locale, ModelMap model) {
+		String phone=httpUtils.getCookieValueByName(request,"phone");
+		JSONObject result=new JSONObject();
+		if(StringUtils.isNotBlank(phone)){
+			result.put("succ", true);
+		}else{
+			result.put("succ", false);
+		}
+		model.put("reval", result.toJSONString());
+		return new ModelAndView("result"); 
+	}
 	/**
 	 * 获得户型设置内容，返回值会直接加载到页面上
 	 * @param model

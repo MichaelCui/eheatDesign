@@ -109,6 +109,7 @@
 </head>
 <body>
 <div class="bgdiv">
+#parse("overlay.vm")
 <h2>发热电缆设计软件</h2>
 <div class="title">请选择您的户型
 <select id="bedRoom">
@@ -147,6 +148,7 @@
 	<option value="4">4</option>
 </select> 阳台
 <button id="getDivbutton" onclick="javascript:getLidiv();">确认户型大小</button>
+<button id="mySolution" onclick="javascript:mySolution();">查看我以前的方案</button>
 </div>
 <div id="houseDiv">
 
@@ -154,8 +156,30 @@
 <button id="submitRooms"  style="display: none;" onclick="javascript:subRooms();">下一步</button>
 <input type="hidden" value="$!{house_id}" id="house_id"/>
 </div>
+
 </body>
 <script type="text/javascript">
+
+
+function mySolution(){
+	window.onbeforeunload=null;
+	$.ajax({
+	     type: "GET",
+	     url: "login.htm",
+	     data: {},
+	     dataType: "json",
+	     success: function(result){
+	     	if(result.succ){
+	     		location.href="mySolution.htm";
+	     	}else{
+	     		showLoginOverlay();
+	     	}
+	     }
+     });
+}
+
+
+
 function subRooms(){
 	window.onbeforeunload=null;
 	$("#submitRooms").attr('disabled',true);

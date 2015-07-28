@@ -2,6 +2,11 @@ package net.laochu.design.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
@@ -60,5 +65,26 @@ public class HttpUtils {
 	        }  
 	        logger.info("response result:"+resultString);
 	        return resultString;
+	}
+	
+	
+	public  String getCookieValueByName(HttpServletRequest request,String name){
+	    Map<String,Cookie> cookieMap = ReadCookieMap(request);
+	    if(cookieMap.containsKey(name)){
+	        Cookie cookie = (Cookie)cookieMap.get(name);
+	        return cookie.getValue();
+	    }else{
+	        return null;
+	    }   
+	}
+	private  Map<String,Cookie> ReadCookieMap(HttpServletRequest request){  
+	    Map<String,Cookie> cookieMap = new HashMap<String,Cookie>();
+	    Cookie[] cookies = request.getCookies();
+	    if(null!=cookies){
+	        for(Cookie cookie : cookies){
+	            cookieMap.put(cookie.getName(), cookie);
+	        }
+	    }
+	    return cookieMap;
 	}
 }

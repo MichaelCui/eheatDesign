@@ -9,7 +9,7 @@
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
 	<meta http-equiv="X-UA-Compatible" content="IE=11; IE=10; IE=9; IE=8; IE=7; IE=EDGE" />
-	<script src="js/jquery-2.1.4.js"></script>
+	<script src="js/jquery-1.11.3.min.js"></script>
 	<script src="js/plug-in.js"></script>
 	<script src="js/assemble.js"></script>
 	<style type="text/css">
@@ -42,17 +42,37 @@
 		}
 	.form{width: 700px;height: auto; overflow:hidden;font-size: 16px;color: #1b1b1b;text-align: left; padding:50px; border:1px solid #ccc; border-radius:10px;}
 	.form div{padding:5px 0;overflow: hidden;}
-	.form label{width: 90px;display: block;float: left;}
-	.form .infos{width:200px;height: 26px;line-height: 26px;border:1px solid #BFBFBF;padding:2px;border-radius:4px;float: left;}
+	.form  label{width: 90px;display: block;float: left;}
+	.form .infos{width:272px;height: 26px;line-height: 26px;border:1px solid #BFBFBF;padding:2px;border-radius:4px;float: left;}
 	.form .code{width:80px;height: 26px;line-height: 26px;border:1px solid #BFBFBF;padding:2px;border-radius:4px;float: left;}
 	.form .div-phone a.send1{height: 26px;text-decoration:none;line-height: 26px;padding:2px;width: 80px;background: #AA8926;font-family: '宋体';color: #fff;font-size: 12px;text-align: center;display: block;float: left;border-radius:2px;margin-left:2px;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-ms-transition:all 0.2s linear;-o-transition:all 0.2s linear;transition:all 0.2s linear;}
 	.form .div-phone a.send1:hover{text-decoration: none;background: #866c1b;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-ms-transition:all 0.2s linear;-o-transition:all 0.2s linear;transition:all 0.2s linear;}
 	.form .div-phone a.send0{height: 26px;text-decoration:none;line-height: 26px;padding:2px;width: 80px;background: #A1A1A1;font-family: '宋体';color: #fff;font-size: 12px;text-align: center;display: block;float: left;border-radius:2px;margin-left:2px;}
 	.form .div-phone a.send0:hover{background: #A1A1A1;font-family: '宋体';color: #fff;font-size: 12px;text-decoration: none;}
+	.form .div-button a.send1{height: 26px;text-decoration:none;line-height: 26px;padding:2px;width: 80px;background: #049FF1;font-family: '宋体';color: #fff;font-size: 12px;text-align: center;display: block;float: left;border-radius:2px;margin-left:2px;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-ms-transition:all 0.2s linear;-o-transition:all 0.2s linear;transition:all 0.2s linear;}
+	.form .div-button a.send1:hover{text-decoration: none;background: #044770;-webkit-transition:all 0.2s linear;-moz-transition:all 0.2s linear;-ms-transition:all 0.2s linear;-o-transition:all 0.2s linear;transition:all 0.2s linear;}
+	.form .div-button a.send0{height: 26px;text-decoration:none;line-height: 26px;padding:2px;width: 80px;background: #A1A1A1;font-family: '宋体';color: #fff;font-size: 12px;text-align: center;display: block;float: left;border-radius:2px;margin-left:2px;}
+	.form .div-button a.send0:hover{background: #A1A1A1;font-family: '宋体';color: #fff;font-size: 12px;text-decoration: none;}
 	.form span.error{height: 26px;line-height: 26px;padding:2px;width: 100px;color: red;padding-left:20px;display: block;float: left;margin-left:10px;font-size: 12px;font-family: '宋体';background: url(images/error.png) no-repeat left center;}
-	.form #phone{width: 116px;}
 	.form .div-conform{padding-right:153px;}
 	.form .div-conform a.conform{width: 136px;height: 34px;display: block;text-align: left;overflow: hidden;background: url(images/btn.jpg) no-repeat;float: right;text-indent: -1000px;}
+	.form button{
+			margin-left:14px;
+			text-decoration:none;
+			padding-left: 0px;
+			border:1px solid blue;
+			width:80px;
+			height:30px;
+			float:top;
+			background: #999; /* for non-css3 browsers */
+			background: linear-gradient(#ffffff, #ebebeb);
+			text-align: center;
+			line-height:30px;
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ebebeb',GradientType=0 )}
+	.form img{
+		width:90px;height:30px;float:left;float:left;margin-left:10px;
+	}
+	
 	</style>
 	<script type="text/javascript">
 	  function changeImg() {
@@ -72,112 +92,158 @@
 	    }
 	    return url;
 	  }
-	var sends = {
+	function showGuest(){
+		$('#member').hide();
+		$('#guset').show();
+		
+	}
+	function showMember(){
+		$('#guset').hide()
+		$('#member').show();
+	}
+	
+	
+	function showpwd(){
+		$('#imgCode').val("");
+		$('#code').val("");
+		$("#userReg").hide();
+		$("#codeLogin").hide();
+		$("#login").fadeTo(200, 200);
+		$("#pwdLogin").fadeTo(200, 200);
+	}
+	function showcode(){
+		changeImg('imgObj');
+		$('#pwd').val("");
+		$("#userReg").hide();
+		$("#pwdLogin").hide();
+		$("#login").fadeTo(200, 200);
+		$("#codeLogin").fadeTo(200, 200);
+	}
+	
+var sends = {
 		checked:1,
 		send:function(){
 				var time = 30;
 				var numbers = /^1\d{10}$/;
 				var val = $('#phone').val().replace(/\s+/g,""); //获取输入手机号码
-				if($('.div-phone').find('span').length == 0 && $('.div-phone a').attr('class') == 'send1'){
+				if($('.div-phone').find('span').length == 0 && $('.div-button a').attr('class') == 'send1'){
 					if(!numbers.test(val) || val.length ==0){
 						$('.div-phone').append('<span class="error">手机格式错误</span>');
 						return false;
 					}
 				}
-				if($("#code").val() == ""){
-					$('.div-phone').append('<span class="error">请输入图片验证码</span>');
-					return false;
+				if($('.div-button').find('span').length == 0 && $('.div-button a').attr('class') == 'send1'){
+					if($("#imgCode").val() == ""){
+						$('.div-button').append('<span class="error">请输入图片验证码</span>');
+						return false;
+					}
 				}
-				if(numbers.test(val)){
+				if($("#imgCode").val() != ""){
+						$('.div-button span').remove();
+				}
+				if(numbers.test(val) &&  $("#imgCode").val() != ""){
 					$('.div-phone span').remove();
 					function timeCountDown(){
 						if(time==0){
 							clearInterval(timer);
-							$('.div-phone a').addClass('send1').removeClass('send0').html("发送验证码");
+							$('.div-button a').addClass('send1').removeClass('send0').html("发送验证码");
 							sends.checked = 1;
+							$("#smsa").attr("onclick","sends.send();");
 							return true;
 						}
-						$('.div-phone a').html(time+"S后再次发送");
+						$('.div-button a').html(time+"S后再次发送");
 						time--;
 						return false;
 						sends.checked = 0;
 					}
-					$('.div-phone a').addClass('send0').removeClass('send1');
+					$('#smsa').removeAttr("onclick");
+					$('.div-button a').addClass('send0').removeClass('send1');
 					timeCountDown();
 					var timer = setInterval(timeCountDown,1000);
+					$.ajax({
+					     type: "POST",
+					     url: "smsCode.htm",
+					     data: {"phone":$("#phone").val(),"code":$("#imgCode").val()},
+					     dataType: "json",
+					     success: function(result){
+				     		if(result.succ){
+				     			changeImg('imgObj')
+				     		}else{
+				     			time=0;
+				     			alert(result.msg);
+				     		}
+					     }
+				     });
 				}
-				$.ajax({
-				     type: "POST",
-				     url: "smsCode.htm",
-				     data: {"phone":$("#phone").val(),"code":$("#code").val()},
-				     dataType: "json",
-				     success: function(result){
-			     		if(result.succ){
-			     			changeImg();
-			     		}else{
-			     			time=0;
-			     			alert(result.msg);
-			     		}
-				     }
-			     });
-		},
-		conform:function(){
-			var name=$('#name').val();
-			var phone=$('#phone').val();
-			var code=$('#ranks').val();
-			if(name==''){
-				alert("请填写您的称呼");
-				return;
-			}
-			if(phone==''){
-				alert("请填写正确的手机");
-				return;
-			}
-			if(code==''){
-				alert("请填写验证码");
-				return;
-			}
-			$.ajax({
-			     type: "POST",
-			     url: "validSmsCode.htm",
-			     data: {"phone":phone,"house_id":"${house_id}","code":code},
-			     dataType: "json",
-			     success: function(result){
-		     		if(result.succ){
-		     			location.href="downpdf.htm?filename="+result.result;  	
-		     		}else{
-		     			alert(result.msg);
-		     		}
-			     }
-		     });			
 		}
+	}
+	
+	function userReg(){
+		$.ajax({
+		     type: "POST",
+		     url: "userReg.htm",
+		     data: {"phone":$("#phone").val(),"code":$('#code').val()},
+		     dataType: "json",
+		     success: function(result){
+		     	if(result.succ){
+					 getSolutionPDF();
+		     	}else{
+					alert(result.msg);
+		     	}
+		     }
+	     });
 	}	
+	
+	function getSolutionPDF(){
+		$.ajax({
+		     type: "POST",
+		     url: "getSolutionPDF.htm",
+		     data: {"house_id":"${house_id}","solution_name":$("#solution_name").val(),"company":$('#company').val(),"author":$('#author').val()},
+		     dataType: "json",
+		     success: function(result){
+		     	if(result.succ){
+		     		location.href="downpdf.htm?filename="+result.result;
+		     	}else{
+		     		alert(result.msg);
+		     	}
+		     }
+	     });
+	}
+				
 	</script>
+	 
 </head>
 <body>
 <div class="bgdiv">
-<h2>北京阳光凯瑞电采暖</h2>
+<h2>发热电缆设计软件</h2>
 <div class="title"><img src="${HousePic}"></img></div>
-<div class="form">
-	<div class="div-name">
-		<label for="name">称呼</label><input type="text" id="name" class="infos" placeholder="请输入称呼" />
-	</div>
-	<div class="div-phone">
-		<label for="phone">手机</label><input type="text" id="phone" class="infos" placeholder="请输入手机" />
-		<input type="text" id="code" class="code" placeholder="图片验证码" />
-		<img id="imgObj"  onclick="changeImg()" style="width:90px;height:20px;float:left;"alt="验证码" src="code.htm" />
-		<a href="javascript:;" class="send1" onclick="sends.send();">发送验证码</a>
-		
-	</div>
-	<div>
 
+<div class="form">
+	<div id="guset">
+		<h3> 方案下载  </h3>
+		<div class="div-phone">
+			<label for="phone">手机</label><input type="text"  value="$!{phone}" id="phone" class="infos" placeholder="请输入手机" />
+		</div>
+		<div class="div-ranks">
+				<label for="ranks">短信验证码</label><input type="text" id="code" class="infos" placeholder="短信验证码"  />
+		</div>
+		<div class="div-button">
+			<label for="phone">验证码</label><input type="text" id="imgCode" class="code" placeholder="图片验证码" />
+			<img id="imgObj"  onclick="changeImg('imgObj')" alt="验证码" src="code.htm" />
+			<a href="javascript:;" class="send1" id="smsa" onclick="sends.send();">发送验证码</a>
+		</div>	
+		<div class="div-sulution">
+			<label for="phone">方案名</label><input type="text" id="solution_name" class="infos" placeholder="请输入方案名称" />
+		</div>
+		<div class="div-company">
+			<label for="phone">设计公司</label><input type="text" id="company" value="$!{UserInfo.company}"  class="infos" placeholder="请输入设计公司" />
+		</div>
+		<div class="div-author">
+			<label for="phone">设计员</label><input type="text" id="author" value="$!{UserInfo.user_name}" class="infos" placeholder="请输入设计员名称" />
+		</div>
+		<div  class="div-conform">
+			<button onclick="userReg()">下载文档</button>
+		</div>
 	</div>
-	<div class="div-ranks">
-		<label for="ranks">验证码</label><input type="text" id="ranks" class="infos" placeholder="请输入验证码"  />
-	</div>
-	<div class="div-conform">
-		<a href="javascript:;" class="conform" onclick="sends.conform();">提交</a>
-	</div>
-</div>
 </div>
 </body>
