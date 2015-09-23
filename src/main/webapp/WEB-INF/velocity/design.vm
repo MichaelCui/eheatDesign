@@ -242,6 +242,7 @@ function hidenAndShow(_this,_p,_imgInput,shapeType){
 	$(_this).show();
 }
 function hideShowParent(_this,checkType,roomName,roomShapeID){
+	$("#submitRooms").show();
 	var ctrl=$(_this).prev().val();
 	if(ctrl==''){
 		alert("请点击图形设置温控器位置");
@@ -309,7 +310,6 @@ function removeRoom(_this,roomID){
 		$(_this).parentDes('li').remove();
 }
  function getLidiv(){
- 		$("#submitRooms").show();
  		$("#getDivbutton").attr('disabled',true);
    		var dataStr="bedRoom.htm?bedRoomNum="+$("#bedRoom").val()+"&livingRoomNum="+$("#livingRoom").val()+"&kitchenNum="+$("#kitchen").val()+"&bathRoomNum="+$("#bathRoom").val()+"&balconyNum="+$("#balcony").val()+"&v=${Tools.timeMillis()}";
 		$.get(dataStr,function(data){ 

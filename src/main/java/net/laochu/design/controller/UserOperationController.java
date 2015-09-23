@@ -60,7 +60,7 @@ public class UserOperationController {
 		JSONObject result=JSONObject.parseObject(resultStr);
 		Boolean b=result.getBoolean("succ");
 		if(b){
-			response.setHeader("Set-Cookie", "phone="+phone+";Path=/design/;HttpOnly;");
+			response.setHeader("Set-Cookie", "phone="+phone+";Path=/;HttpOnly;");
 		}
 		model.put("reval", resultStr);
 		return new ModelAndView("result");

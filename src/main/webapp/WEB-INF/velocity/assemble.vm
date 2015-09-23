@@ -184,7 +184,6 @@
  	
 	  $('#subHouse').click(function(){
 	  		ajaxAssemble();
-			location.href="getHouseDetail.htm?house_id=$!{house_id}"  	
 	  });
  	  
  	  
@@ -253,7 +252,7 @@
 	     data: {"paramsStr":$.toJSON(shapeList),"houseid":"${house_id}","scale":${scale}},
 	     dataType: "json",
 	     success: function(result){
-	     	console.log(result);
+	     	location.href="getHouseDetail.htm?house_id=$!{house_id}"
 	     }
      });
 	}

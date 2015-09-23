@@ -203,6 +203,9 @@ var sends = {
 		     success: function(result){
 		     	if(result.succ){
 		     		location.href="downpdf.htm?filename="+result.result;
+		     		alert("设计已完成，点击确认回到主页");
+		     		location.href="index.htm";
+		     		
 		     	}else{
 		     		alert(result.msg);
 		     	}
@@ -224,14 +227,14 @@ var sends = {
 		<div class="div-phone">
 			<label for="phone">手机</label><input type="text"  value="$!{phone}" id="phone" class="infos" placeholder="请输入手机" />
 		</div>
-		<div class="div-ranks">
+		<!-- <div class="div-ranks">
 				<label for="ranks">短信验证码</label><input type="text" id="code" class="infos" placeholder="短信验证码"  />
 		</div>
 		<div class="div-button">
 			<label for="phone">验证码</label><input type="text" id="imgCode" class="code" placeholder="图片验证码" />
 			<img id="imgObj"  onclick="changeImg('imgObj')" alt="验证码" src="code.htm" />
 			<a href="javascript:;" class="send1" id="smsa" onclick="sends.send();">发送验证码</a>
-		</div>	
+		</div> -->	
 		<div class="div-sulution">
 			<label for="phone">方案名</label><input type="text" id="solution_name" class="infos" placeholder="请输入方案名称" />
 		</div>

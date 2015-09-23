@@ -139,7 +139,10 @@
 	     	success: function(result){
 	     		var reval = jQuery.parseJSON(result); 
 	     		if(reval.success){
-					$('#totalPrice').html(reval.reVal.toFixed(2));
+	     		
+	     		
+	     			refresh();
+					<!-- $('#totalPrice').html(reval.reVal.toFixed(2)); -->
 	     		}
 	     	}
 	     });
